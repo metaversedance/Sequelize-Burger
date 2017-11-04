@@ -1,11 +1,11 @@
 const express = require("express");
 
-var burger = require("../models/burger.js");
+var Burger = require("../models/").Burger;
 
 
 module.exports = function(app) {
 	app.get("/", function(req,res){
-		burger.all(function(result){
+		Burger.allBurgers(function(result){
 			res.render("index",{burgers:result.reverse() });
 
 		})
@@ -15,18 +15,16 @@ module.exports = function(app) {
 
 	app.get("/api/devour/:id", function(req,res){
 		var id = req.params.id;
-		burger.update(id, {devoured: true}, function(result){
-			burger.all(function(result){
+		Burger.updateBurger(id, {devoured: true}, function(){
 				console.log("render")
 				res.redirect("/")
-			})
 		})
 	})
 
 	app.post("/api/new/", function(req,res){
 		var burger_name = req.body.name;
 		console.log(burger_name)
-		burger.create(burger_name, function(result){
+		Burger.createBurger(burger_name, function(result){
 			res.redirect("/")
 		})
 	})

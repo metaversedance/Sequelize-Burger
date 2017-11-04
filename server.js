@@ -23,12 +23,26 @@ app.set("view engine", "handlebars");
 // app.use("/", routes);
 
 app.listen(port);
+require("./controllers/burgers_controller.js")(app)
+
+var db = require("./models");
+
+db.sequelize.sync({ force: true }).then(function() {
+	var PORT = process.env.PORT || 8080;
+  app.listen(PORT, function() {
+    console.log("App listening on PORT " + PORT);
+  });
 
 
 
-var controller = require("./controllers/burgers_controller.js");
-var burger = require("./models/burger.js")
-controller(app);
+});
+
+
+
+// var controller = require("./controllers/burgers_controller.js");
+// var burger = require("./models/burger.js")
+// controller(app);
+
 
 //burger_name,callback
 
